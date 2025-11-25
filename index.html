@@ -235,14 +235,22 @@ function tocarMorse(codigo) {
 
 <script>
 function enviarMorse() {
-    const texto = document.getElementById("morse").value;
+    const texto = document.getElementById("resultado").textContent; // CORRETO
+    const selectid = document.getElementById("morse");
+    let id = selectid.selectedOptions[0].id;
+
+    const bodyData =
+        "id=" + encodeURIComponent(id) +
+        "&texto=" + encodeURIComponent(texto);
+
+    console.log("ENVIANDO:", bodyData); // 🟢 Veja o que está sendo enviado
 
     fetch("bank.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "morse=" + encodeURIComponent(texto)
+        body: bodyData
     })
     .then(response => response.text())
     .then(data => {
